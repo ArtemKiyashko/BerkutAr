@@ -30,11 +30,20 @@
         let response = await fetch(`https://faweprivateberkutpoiservice.azurewebsites.net/api/FindNearestPoint?code=bso09L9jod196239YDfawVwoXZ0N6rfwSbwH0B6p9HcnAzFuj82wmA==&lat=${e.detail.position.latitude}&long=${e.detail.position.longitude}`);
         let pois = await response.json();
         pois.forEach(poi => {
+          let container = document.createElement('a-entity');
+          container.setAttribute("data", "marker");
+          container.setAttribute("gps-new-entity-place", {
+            latitude: poi.lat,
+            longitude: poi.long
+          });
+
           let nodes = createElementsFromHTML(poi.content);
 
           nodes.forEach(node => {
-            scene.appendChild(node);
+            container.appendChild(node);
           });
+
+          scene.appendChild(container);
         });
       });
     };
