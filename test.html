@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>BerkutAR</title>
+    <!-- A-Frame itself -->
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+
+    <!-- Pure three.js code that the A-Frame components use for location-based AR -->
+    <script type='text/javascript' src='lib/ar-threex-location-only.js'></script>
+
+    <!-- AR.js A-Frame components -->
+    <script type='text/javascript' src='lib/aframe-ar.js'></script>
+
+    <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
+</head>
+
+<body>
+    <a-scene>
+        <a-assets>
+            <a-asset-item id="cutefox" src="models/cute_fox/scene.gltf"></a-asset-item>
+        </a-assets>
+        <a-entity gltf-model="#cutefox" scale="0.1 0.1 0.1" rotation="0"></a-entity>
+    </a-scene>
+</body>
+
+</html>
