@@ -9,6 +9,9 @@ window.onload = () => {
 function removeOldMarkers() {
     let markers = document.querySelectorAll("[data='marker']");
     markers.forEach(marker => { marker.remove(); });
+
+    let assets = document.querySelector("a-assets");
+    assets.innerHTML = '';
 }
 
 async function setArObjects(lat, lon) {
@@ -27,11 +30,18 @@ async function setArObjects(lat, lon) {
             longitude: poi.long
         });
 
+        let assetsContainer = document.querySelector("a-assets");
+
         let nodes = createElementsFromHTML(poi.content);
+        let assets = createElementsFromHTML(poi.assets);
 
         nodes.forEach(node => {
             container.appendChild(node);
         });
+
+        assets.forEach(asset => {
+            assetsContainer.appendChild(asset);
+        })
 
         scene.appendChild(container);
     });
@@ -39,7 +49,7 @@ async function setArObjects(lat, lon) {
 
 function createElementsFromHTML(htmlString) {
     var div = document.createElement('div');
-    div.innerHTML = htmlString.trim();
+    div.innerHTML = htmlString;
     return div.childNodes
 }
 
