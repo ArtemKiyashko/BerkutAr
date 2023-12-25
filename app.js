@@ -9,6 +9,9 @@ window.onload = () => {
 function removeOldMarkers() {
     let markers = document.querySelectorAll("[data='marker']");
     markers.forEach(marker => { marker.remove(); });
+
+    let assets = document.querySelector("a-assets");
+    assets.innerHTML = '';
 }
 
 async function setArObjects(lat, lon) {
@@ -16,7 +19,7 @@ async function setArObjects(lat, lon) {
     removeOldMarkers();
 
     let scene = document.querySelector("a-scene");
-    let response = await fetch(`https://faweprivateberkutpoiservice.azurewebsites.net/api/FindNearestPoint?code=bso09L9jod196239YDfawVwoXZ0N6rfwSbwH0B6p9HcnAzFuj82wmA==&lat=${lat}&long=${lon}`);
+    let response = await fetch(`https://faweprivateberkutpoiservice.azurewebsites.net/api/FindNearestPoint?lat=${lat}&long=${lon}`);
     let pois = await response.json();
 
     pois.forEach(poi => {
@@ -27,11 +30,18 @@ async function setArObjects(lat, lon) {
             longitude: poi.long
         });
 
+        let assetsContainer = document.querySelector("a-assets");
+
         let nodes = createElementsFromHTML(poi.content);
+        let assets = createElementsFromHTML(poi.assets);
 
         nodes.forEach(node => {
             container.appendChild(node);
         });
+
+        assets.forEach(asset => {
+            assetsContainer.appendChild(asset);
+        })
 
         scene.appendChild(container);
     });
@@ -39,7 +49,7 @@ async function setArObjects(lat, lon) {
 
 function createElementsFromHTML(htmlString) {
     var div = document.createElement('div');
-    div.innerHTML = htmlString.trim();
+    div.innerHTML = htmlString;
     return div.childNodes
 }
 
