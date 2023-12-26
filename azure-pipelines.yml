@@ -1,0 +1,67 @@
+# Node.js with React
+# Build a Node.js project that uses React.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+trigger:
+  batch: true
+  branches:
+    include:
+      - main
+      - develop
+
+variables:
+  subscription: 'Azure Vostok (60447d26-d388-4a2b-a8cd-45114f7099a8)'
+  # Storage account name
+  storageAccountName: 'sawevprivate'
+
+  # Agent VM image name
+  vmImageName: 'ubuntu-latest'
+
+stages:
+- stage: Build
+  displayName: Build stage
+
+  jobs:
+    - job: Build
+      displayName: Build
+      pool:
+        vmImage: $(vmImageName)
+
+      steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '20.x'
+        displayName: 'Install Node.js'
+
+      - script: |
+          npm install
+          npm run build
+        displayName: 'npm install and build'
+
+      - publish: $(Build.ArtifactStagingDirectory)/build/
+        artifact: drop
+
+- stage: Deploy
+  displayName: Deploy stage
+  dependsOn: Build
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+
+  jobs:
+  - deployment: Deploy
+    displayName: Deploy
+    environment: 'production'
+    pool:
+      vmImage: $(vmImageName)
+
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: AzureFileCopy@5
+            inputs:
+              SourcePath: '$(Pipeline.Workspace)/drop/'
+              azureSubscription: ${subscription}
+              Destination: 'AzureBlob'
+              storage: ${storageAccountName}
+              ContainerName: '$web'
