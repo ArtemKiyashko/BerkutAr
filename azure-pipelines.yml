@@ -11,7 +11,6 @@ trigger:
       - develop
 
 variables:
-  subscription: 'Azure Vostok (60447d26-d388-4a2b-a8cd-45114f7099a8)'
   # Storage account name
   storageAccountName: 'sawevprivate'
 
@@ -61,7 +60,7 @@ stages:
           - task: AzureFileCopy@5
             inputs:
               SourcePath: '$(Pipeline.Workspace)/drop/'
-              azureSubscription: ${subscription}
+              azureSubscription: 'Azure Vostok (60447d26-d388-4a2b-a8cd-45114f7099a8)'
               Destination: 'AzureBlob'
-              storage: ${storageAccountName}
+              storage: '${storageAccountName}'
               ContainerName: '$web'
