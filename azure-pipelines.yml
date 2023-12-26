@@ -10,13 +10,6 @@ trigger:
       - main
       - develop
 
-variables:
-  # Storage account name
-  storageAccountName: 'sawevprivate'
-
-  # Agent VM image name
-  vmImageName: 'windows-2019'
-
 stages:
 - stage: Build
   displayName: Build stage
@@ -25,7 +18,7 @@ stages:
     - job: Build
       displayName: Build
       pool:
-        vmImage: $(vmImageName)
+        vmImage: 'ubuntu-latest'
 
       steps:
       - task: NodeTool@0
@@ -41,7 +34,7 @@ stages:
       - task: CopyFiles@2
         inputs:
           sourceFolder: '$(Build.SourcesDirectory)'
-          contents: build\**
+          contents: build/**
           targetFolder: '$(Build.ArtifactStagingDirectory)'
         displayName: 'Copy project files'
 
@@ -58,8 +51,7 @@ stages:
     displayName: Deploy
     environment: 'production'
     pool:
-      vmImage: $(vmImageName)
-
+      vmImage: 'windows-2019'
     strategy:
       runOnce:
         deploy:
@@ -69,5 +61,5 @@ stages:
               SourcePath: '$(Pipeline.Workspace)\drop\build\'
               azureSubscription: 'Azure Vostok (60447d26-d388-4a2b-a8cd-45114f7099a8)'
               Destination: 'AzureBlob'
-              storage: ${storageAccountName}
+              storage: 'sawevprivate'
               ContainerName: '$web'
