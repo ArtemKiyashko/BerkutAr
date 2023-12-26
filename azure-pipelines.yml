@@ -58,7 +58,7 @@ stages:
           steps:
           - task: AzureFileCopy@5
             inputs:
-              SourcePath: '$(Pipeline.Workspace)\drop\'
+              SourcePath: '$(Pipeline.Workspace)\drop\**'
               azureSubscription: 'Azure Vostok (60447d26-d388-4a2b-a8cd-45114f7099a8)'
               Destination: 'AzureBlob'
               storage: 'sawevprivate'
