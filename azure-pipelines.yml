@@ -37,6 +37,13 @@ stages:
           npm install
           npm run build
         displayName: 'npm install and build'
+      
+      - task: CopyFiles@2
+        inputs:
+          sourceFolder: '$(Build.SourcesDirectory)'
+          contents: build/*
+          targetFolder: '$(Build.ArtifactStagingDirectory)'
+        displayName: 'Copy project files'
 
       - publish: $(Build.ArtifactStagingDirectory)
         artifact: drop
