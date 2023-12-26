@@ -1,24 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-  <title>BerkutAR</title>
   <meta charset="utf-8" />
-  <link rel=“icon” href=”/favicon.ico” type=“image/x-icon”>
-  <link rel=“shortcut icon” href=“/favicon.ico” type=“image/x-icon”>
+  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#000000" />
   <meta name="description" content="Berkut Augmented Reality" />
-  <link rel="apple-touch-icon" href="/logo192.png" />
+  <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
   <meta property="og:title" content="Berkut CityQuest Augmented Reality">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://berkut.ar/">
   <meta property="og:image" content="https://berkut.ar/ogimage.png">
   <meta property="og:site_name" content="BerkutAR">
-  <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-  <link rel="manifest" href="/manifest.json" />
   <!-- A-Frame itself -->
   <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
 
@@ -30,18 +25,12 @@
   <script type='text/javascript' src='lib/aframe-extras.loaders.min.js'></script>
 
   <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
+  <title>BerkutAR</title>
 </head>
 
 <body>
-  <a-scene vr-mode-ui='enabled: false' arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false'
-    renderer='antialias: true; alpha: true'>
-    <a-assets></a-assets>
-    <!-- <a-camera gps-new-camera='gpsMinDistance: 5'></a-camera> -->
-    <a-camera look-controls-enabled='false' arjs-device-orientation-controls='smoothingFactor: 0.1'
-      gps-new-camera='gpsMinDistance: 5'></a-camera>
-  </a-scene>
-
-  <script type="text/javascript" src="app.js"></script>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="root"></div>
 </body>
 
 </html>
